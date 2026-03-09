@@ -1,8 +1,21 @@
-# Framework principal
+# --- CORE BACKEND ---
+
+# Framework principal: Gestiona las rutas y lógica de la API.
 fastapi==0.110.0 
 
-# Servidor ASGI 
+# Servidor ASGI: El motor que corre la aplicación.
 uvicorn==0.27.1 
 
-# Validación de datos
+# Validación de datos: Asegura el formato correcto de la información.
 pydantic==2.6.1 
+
+# Gestión de Variables de Entorno: Lee el archivo .env de forma segura.
+python-dotenv==1.0.1
+
+# --- INTELIGENCIA ARTIFICIAL & COMUNICACIÓN ---
+
+# Cliente oficial de OpenAI: Para conectar con modelos GPT.
+openai==1.13.3
+
+# Cliente HTTP: Versión específica para evitar el error de 'proxies'.
+httpx==0.27.0

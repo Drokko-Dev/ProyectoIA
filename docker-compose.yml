@@ -6,6 +6,10 @@ services:
     volumes:
       - ./backend:/app
     # Esto evita que se borren archivos si el contenedor se detiene
+    env_file:
+      - .env
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
 
   frontend-app:
     build: ./frontend
