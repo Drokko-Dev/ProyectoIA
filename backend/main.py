@@ -1,7 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from services.ia_services import IAService 
 from pydantic import BaseModel
+
+from services.ia_services import IAService # Importamos el servicio de IA (nuestro)
 
 app = FastAPI()
 ia_service = IAService()
