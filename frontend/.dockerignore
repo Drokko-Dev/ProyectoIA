@@ -1,0 +1,16 @@
+# Dependencias (Dejar que Docker las instale internamente)
+node_modules/
+npm-debug.log*
+
+# Compilaciones locales
+dist/
+build/
+
+# Variables de entorno
+.env
+.env.local
+
+# Docker / Git
+.git
+.gitignore
+Dockerfile

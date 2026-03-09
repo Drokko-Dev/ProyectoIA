@@ -1,0 +1,8 @@
+# Framework principal
+fastapi==0.110.0 
+
+# Servidor ASGI 
+uvicorn==0.27.1 
+
+# Validación de datos
+pydantic==2.6.1 

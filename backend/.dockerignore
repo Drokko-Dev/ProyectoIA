@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# Variables de entorno locales
+.env
+
+# Docker / Git
+.git
+.gitignore
+Dockerfile
+docker-compose.yml

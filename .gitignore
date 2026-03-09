@@ -1,0 +1,36 @@
+# --- General ---
+.DS_Store
+.env
+.env.local
+*.log
+
+# --- Python (Backend) ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.lib/
+parts/
+sdist/
+var/
+wheels/
+pip-log.txt
+pip-delete-this-directory.txt
+.python-version
+
+# --- Node/React (Frontend) ---
+node_modules/
+/frontend/dist
+/frontend/build
+.npm
+.eslintcache
+
+# --- Docker ---
+.docker/
