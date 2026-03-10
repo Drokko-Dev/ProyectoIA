@@ -13,11 +13,14 @@ function App() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8000/api/generate-script", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: input }),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_URL_BACKEND}/api/generate-script-voice`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt: input }),
+        },
+      );
 
       const data = await res.json();
       setResponse(data.response);

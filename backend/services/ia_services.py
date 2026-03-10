@@ -11,7 +11,7 @@ class IAService:
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY")) # Asegúrate de que esta variable esté en tu .env y en Docker
         self.model = "gpt-4o" # Puedes centralizar el modelo aquí
 
-    async def get_chat_response(self, user_prompt: str):
+    async def generate_script_voice(self, user_prompt: str):
         user_prompt = f"""
         Actúa como un asistente de IA profesional para dentistas que crea contenido para pacientes.
         Descripción Técnica: {user_prompt}

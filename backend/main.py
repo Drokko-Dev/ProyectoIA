@@ -24,8 +24,7 @@ app.add_middleware(
 )
 
 # 4. Definimos el modelo de datos para la solicitud (opcional pero recomendado)
-class ScriptRequest(BaseModel):
-    prompt: str
+
 
 @app.get("/")
 def read_root():
@@ -35,11 +34,13 @@ def read_root():
 def home():
     return {"message": "API Conectada"}
 
-@app.post("/api/generate-script")
-async def generate_script(request: ScriptRequest):
+class ScriptRequest(BaseModel):
+    prompt: str
+
+@app.post("/api/generate-script-voice")
+async def generate_script_voice(request: ScriptRequest):
     try:
-        # Usamos el servicio en lugar de escribir toda la lógica aquí
-        answer = await ia_service.get_chat_response(request.prompt)
+        answer = await ia_service.generate_script_voice(request.prompt)
         return {"response": answer}
     except Exception as e:
         raise HTTPException(status_code=500, detail="Error procesando la IA")
