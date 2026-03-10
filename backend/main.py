@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from fastapi.staticfiles import StaticFiles
 
 from services.ia_services import IAService # Importamos el servicio de IA (nuestro)
 
@@ -23,7 +24,8 @@ app.add_middleware(
     allow_headers=["*"],              # ¿Pueden enviar cualquier cabecera? (Sí)
 )
 
-# 4. Definimos el modelo de datos para la solicitud (opcional pero recomendado)
+
+app.mount("/archivos", StaticFiles(directory="/data_storage"), name="archivos")
 
 
 @app.get("/")

@@ -34,9 +34,8 @@ class IAService:
 
             )
             script= response.choices[0].message.content
-            print(f"Guion generado: {script}")
             ruta_final = self.file_manager.save_file(script, file_type="text")
-            print(f"Archivo guardado en: {ruta_final}")
+            print(f"Script Generado - Archivo guardado en: {ruta_final}")
             return script
         
         except Exception as e:
