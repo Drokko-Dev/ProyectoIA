@@ -5,11 +5,10 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/app
+      - ./storage:/data_storage
     # Esto evita que se borren archivos si el contenedor se detiene
     env_file:
-      - .env
-    environment:
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ./backend/.env
 
   frontend-app:
     build: ./frontend
@@ -17,7 +16,8 @@ services:
       - "5173:5173"
     volumes:
       - ./frontend:/app
-      # El siguiente volumen es un truco para no romper node_modules en Windows/Mac
       - /app/node_modules
+    env_file:
+      - ./frontend/.env
     depends_on:
       - backend-api

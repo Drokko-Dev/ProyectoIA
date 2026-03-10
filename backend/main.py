@@ -43,4 +43,5 @@ async def generate_script_voice(request: ScriptRequest):
         answer = await ia_service.generate_script_voice(request.prompt)
         return {"response": answer}
     except Exception as e:
+        print(f"Error detectado: {e}")
         raise HTTPException(status_code=500, detail="Error procesando la IA")

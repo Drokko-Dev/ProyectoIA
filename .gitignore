@@ -34,3 +34,11 @@ node_modules/
 
 # --- Docker ---
 .docker/
+
+# Ignorar todos los archivos generados pero mantener las carpetas
+storage/texts/*
+storage/images/*
+storage/audio/*
+storage/video/*
+# No ignores los .gitkeep si quieres que las carpetas suban vacías
+!storage/**/.gitkeep

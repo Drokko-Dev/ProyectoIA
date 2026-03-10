@@ -5,6 +5,8 @@ __pycache__/
 .venv/
 venv/
 ENV/
+storage/
+*.pyc
 
 # Variables de entorno locales
 .env
