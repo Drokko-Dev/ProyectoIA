@@ -11,8 +11,10 @@ class IAService:
     def __init__(self):
         # Inicializamos el cliente usando la variable de entorno
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY")) # Asegúrate de que esta variable esté en tu .env y en Docker
-        self.model = "gpt-4o" # Puedes centralizar el modelo aquí
+        self.model_text = "gpt-4o" # Puedes centralizar el modelo aquí
+        self.model_audio = "tts-1"
         self.file_manager = FileService()
+        self.backend_url = os.getenv("BACKEND_URL", "http://localhost:8000")
 
     async def generate_script_voice(self, user_prompt: str):
         full_prompt = f"""
@@ -24,7 +26,7 @@ class IAService:
         """
         try:
             response = self.client.chat.completions.create(
-                model=self.model,
+                model=self.model_text,
                 messages=[
                     {"role": "system", "content": "You are a professional dentist AI assistant creating content for patients."},
                     {"role": "user", "content": full_prompt}
@@ -34,11 +36,44 @@ class IAService:
 
             )
             script= response.choices[0].message.content
-            ruta_final = self.file_manager.save_file(script, file_type="text")
+            ruta_final = self.file_manager.save_file(
+                script, 
+                file_type="text"
+                )
             print(f"Script Generado - Archivo guardado en: {ruta_final}")
             return script
         
         except Exception as e:
             # Aquí podrías manejar errores específicos (falta de crédito, etc.)
             print(f"Error en OpenAI Service: {e}")
+            raise e
+    
+    async def generate_voice(self, script_voice: str):        
+        try:          
+            # Elegimos la voz. OpenAI tiene:
+            response_audio = self.client.audio.speech.create(
+                model=self.model_audio,
+                voice="nova",  # alloy, echo, fable, onyx, nova, y shimmer.
+                input=script_voice
+            )
+            
+            # Guardamos el audio. 
+            # response_audio.content trae los "bytes" del mp3 listos para guardar
+            ruta_audio = self.file_manager.save_file(
+                response_audio.content, 
+                file_type="audio", 
+                extension="mp3"
+            )
+            
+            # Extraemos solo el nombre del archivo (ej: gen_20260310_120000.mp3)
+            nombre_archivo_audio = os.path.basename(ruta_audio)
+            
+            # Retornamos un diccionario con el texto y la URL pública del audio
+            return {
+                "texto": script_voice,
+                "audio_url": f"{self.backend_url}/archivos/audio/{nombre_archivo_audio}"
+            }
+            
+        except Exception as e:
+            print(f"Error en el servicio: {e}")
             raise e

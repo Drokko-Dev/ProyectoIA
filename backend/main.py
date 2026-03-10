@@ -47,3 +47,15 @@ async def generate_script_voice(request: ScriptRequest):
     except Exception as e:
         print(f"Error detectado: {e}")
         raise HTTPException(status_code=500, detail="Error procesando la IA")
+
+@app.post("/api/generate-voice")
+async def generate_voice(request: ScriptRequest):
+    try:        
+        # 2. La IA lee ese texto y genera el MP3
+        resultado_final = await ia_service.generate_voice(request.prompt)
+        
+        # 3. Devolvemos el diccionario con ambas cosas
+        return {"response": resultado_final}
+    except Exception as e:
+        print(f"Error detectado: {e}")
+        raise HTTPException(status_code=500, detail="Error procesando la IA")

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function Promt_IA() {
+function Promt_IA({ onTextoGenerado }) {
   const [input, setInput] = useState("");
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,6 +21,7 @@ function Promt_IA() {
 
       const data = await res.json();
       setResponse(data.response);
+      onTextoGenerado(data.response);
     } catch (error) {
       setResponse("Error al conectar con la IA.");
     } finally {
@@ -43,6 +44,7 @@ function Promt_IA() {
 
       // 4. Lo guardamos en el estado para mostrarlo en pantalla
       setResponse(texto);
+      onTextoGenerado(texto);
     } catch (error) {
       console.error("Error leyendo el archivo:", error);
     } finally {
@@ -57,7 +59,6 @@ function Promt_IA() {
         maxWidth: "600px",
         margin: "auto",
         fontFamily: "sans-serif",
-        borderBottom: "1px solid #ddd",
       }}
     >
       <h1>1. 🤖 Mi Asistente IA</h1>
