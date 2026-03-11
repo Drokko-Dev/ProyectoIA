@@ -19,10 +19,10 @@ class FileService:
             path = os.path.join(self.base_path, folder)
             os.makedirs(path, exist_ok=True)
 
-    def save_file(self, content, file_type="text", extension="txt"):
+    def save_file(self, content, file_type="text", extension="txt", prefix: str = "gen"):
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"gen_{timestamp}.{extension}"
-        
+        filename = f"{prefix}_{timestamp}.{extension}"
+
         # Elegimos la subcarpeta correcta
         subfolder = self.folders.get(file_type, "texts")
         filepath = os.path.join(self.base_path, subfolder, filename)

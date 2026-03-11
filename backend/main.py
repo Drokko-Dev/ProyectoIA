@@ -59,3 +59,20 @@ async def generate_voice(request: ScriptRequest):
     except Exception as e:
         print(f"Error detectado: {e}")
         raise HTTPException(status_code=500, detail="Error procesando la IA")
+
+class VoiceRequest(BaseModel):
+    prompt: str 
+    voz: str = "referencia.wav"
+
+@app.post("/api/generate-voice-xtts")
+async def generate_voice_endpoint(request: VoiceRequest):
+    try:
+        # Llamamos a tu servicio que se conecta con XTTS y guarda el archivo
+        # (La función que armamos con httpx)
+        resultado = await ia_service.generate_voice_xtts(request.prompt, request.voz)
+        
+        # Devolvemos el JSON exacto que React espera leer
+        return {"response": resultado}
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

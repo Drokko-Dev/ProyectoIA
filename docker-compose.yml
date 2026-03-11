@@ -21,3 +21,15 @@ services:
       - ./frontend/.env
     depends_on:
       - backend-api
+
+  xtts-service:
+    build: ./xtts_service
+    ports:
+      - "8001:8001"
+    volumes:
+      # Conectamos una carpeta física para que puedas soltar tus audios de referencia
+      - ./xtts_service/assets:/app/assets
+    environment:
+      # Nuestro interruptor manual. Ponlo en True si algún día quieres forzar la CPU.
+      - FORZAR_CPU=False
+      - COQUI_TOS_AGREED=1 #Le decimos que sí a los términos automáticamente

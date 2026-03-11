@@ -1,6 +1,7 @@
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
+import httpx
 
 from services.FileService import FileService
 
@@ -83,4 +84,47 @@ class IAService:
             
         except Exception as e:
             print(f"Error en el servicio: {e}")
+            raise e
+
+    async def generate_voice_xtts(self, script_voice: str, nombre_voz: str):        
+        try:          
+            print(f"Enviando texto a XTTS usando la voz: {nombre_voz}...")
+            
+            # 1. Preparamos los datos para tu microservicio
+            payload = {
+                "text": script_voice,
+                "language": "es",
+                "speaker_wav": f"assets/{nombre_voz}" 
+            }
+            
+            # 2. Hacemos la petición a tu contenedor XTTS (Puerto 8001)
+            # Timeout largo porque si estás en CPU, tomará su tiempo
+            async with httpx.AsyncClient() as client:
+                # OJO: xtts-service es el nombre que le pusiste en el docker-compose.yml
+                xtts_url = "http://xtts-service:8001/api/tts" 
+                response = await client.post(xtts_url, json=payload, timeout=180.0)
+                
+                if response.status_code != 200:
+                    raise Exception(f"Error en XTTS: {response.text}")
+                
+                audio_bytes = response.content
+            
+            # 3. Guardamos el archivo usando el nuevo superpoder de tu FileService
+            ruta_audio = self.file_manager.save_file(
+                audio_bytes, 
+                file_type="audio", 
+                extension="wav", 
+                prefix="xtts" # <--- ¡MAGIA AQUÍ! El archivo se llamará xtts_202603...wav
+            )
+            
+            nombre_archivo_audio = os.path.basename(ruta_audio)
+            url_completa = f"{self.backend_url}/archivos/audio/{nombre_archivo_audio}"
+            
+            return {
+                "texto": script_voice,
+                "audio_url": url_completa
+            }
+            
+        except Exception as e:
+            print(f"Error generando voz con XTTS: {e}")
             raise e

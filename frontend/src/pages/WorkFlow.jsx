@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Promt_IA from "../components/Promt_IA";
 import VoiceIA from "../components/Voice_IA";
+import VoiceIA_xtts from "../components/Voice_IA_xtts";
 
 function WorkFlow() {
   // Este estado es el puente entre ambos componentes
@@ -23,6 +24,21 @@ function WorkFlow() {
           }}
         >
           <VoiceIA texto={textoGenerado} onTextoCambiado={setTextoGenerado} />
+        </div>
+      )}
+      {/* Paso 2.1: Solo mostramos VoiceIA con XTTS si ya hay texto generado */}
+      {textoGenerado && (
+        <div
+          style={{
+            marginTop: "30px",
+            borderTop: "2px solid #ccc",
+            paddingTop: "20px",
+          }}
+        >
+          <VoiceIA_xtts
+            texto={textoGenerado}
+            onTextoCambiado={setTextoGenerado}
+          />
         </div>
       )}
     </div>
