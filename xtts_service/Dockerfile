@@ -1,7 +1,7 @@
 # --- 1. IMAGEN BASE ---
 # Usamos Python 3.10 versión 'slim' (ligera). 
 # Es la versión más estable y recomendada para correr PyTorch y modelos de IA.
-FROM python:3.10-slim
+FROM python:3.11-slim
 
 # --- 2. DEPENDENCIAS DEL SISTEMA OPERATIVO ---
 # Actualizamos Linux e instalamos 'ffmpeg' (el motor estándar de la industria para manipular audio)
@@ -21,8 +21,14 @@ WORKDIR /app
 # (Esto es un truco Pro: si cambias tu código mañana, Docker no volverá a descargar PyTorch de 2GB, usará su caché).
 COPY requirements.txt .
 
+# Actualizamos pip para evitar errores de resolución antiguos
+RUN pip install --upgrade pip
+
 # Instalamos las librerías sin guardar basura (--no-cache-dir) para que la imagen pese menos.
 RUN pip install --no-cache-dir -r requirements.txt
+
+# --- FORZAMOS LA INSTALACIÓN DEL MODELO CON LA URL DIRECTA ---
+RUN pip install https://github.com/explosion/spacy-models/releases/download/es_core_news_sm-3.7.0/es_core_news_sm-3.7.0.tar.gz
 
 # --- 5. CÓDIGO FUENTE ---
 # Ahora sí, copiamos nuestro main.py y cualquier otro archivo a la carpeta /app del contenedor.

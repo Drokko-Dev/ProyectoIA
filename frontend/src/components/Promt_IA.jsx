@@ -63,7 +63,7 @@ function Promt_IA({ onTextoGenerado }) {
     >
       <h1>1. 🤖 Mi Asistente IA</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmitTest}>
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}

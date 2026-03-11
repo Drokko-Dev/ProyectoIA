@@ -1,28 +1,18 @@
 # --- SERVIDOR Y API ---
-
-# Framework principal: Crea el endpoint que recibirá el texto para convertir a voz.
 fastapi==0.110.0
-
-# Servidor ASGI: El motor que corre la aplicación y expone el puerto.
 uvicorn==0.27.1
-
-# Validación de datos: Asegura que el JSON recibido tenga el texto y el idioma correctos.
 pydantic==2.6.1
-
-# Gestión de Variables de Entorno: Lee configuraciones como FORZAR_CPU desde un .env.
 python-dotenv==1.0.1
+typing-extensions>=4.8.0
 
 # --- MOTOR DE INTELIGENCIA ARTIFICIAL (VOZ) ---
-
-# Coqui TTS: El "Cerebro" que contiene el modelo XTTS v2 para clonar y sintetizar voz.
 TTS==0.22.0
-
-# PyTorch: El "Músculo Matemático" que hace los cálculos de la IA y gestiona el uso de CPU o GPU.
 torch==2.2.1
-
-# --- EL SALVAVIDAS (Parche de compatibilidad) ---
-# Evita que se descargue la última versión que rompe XTTS
 transformers==4.37.2
+spacy==3.7.4
+huggingface-hub==0.25.0
 
-# --- EDICIÓN DE AUDIO (Post-Procesamiento) ---
+# --- EDICIÓN DE AUDIO ---
 pydub==0.25.1
+# Quitamos el pin fijo y dejamos el mínimo que pide TTS
+scipy>=1.11.2
