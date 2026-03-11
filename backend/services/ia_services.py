@@ -12,7 +12,7 @@ class IAService:
         # Inicializamos el cliente usando la variable de entorno
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY")) # Asegúrate de que esta variable esté en tu .env y en Docker
         self.model_text = "gpt-4o" # Puedes centralizar el modelo aquí
-        self.model_audio = "tts-1"
+        self.model_audio = "tts-1-hd"
         self.file_manager = FileService()
         self.backend_url = os.getenv("BACKEND_URL", "http://localhost:8000")
 
@@ -20,8 +20,15 @@ class IAService:
         full_prompt = f"""
         Actúa como un asistente de IA profesional para dentistas que crea contenido para pacientes.
         Descripción Técnica: {user_prompt}
-        Prompt: Escribe un guion corto de 15-20 segundos con voz en off que traduzca esta descripción técnica en una explicación atractiva y fácil de entender para el paciente.
-        Mantenlo profesional pero accesible. SACA SÓLO el texto hablado, sin acciones, sin títulos, sin emojis o hashtags.
+        
+        Prompt: Escribe un guion corto de 15-20 segundos con voz en off que traduzca esta descripción técnica en una explicación atractiva y fácil de entender.
+        
+        REGLAS DE ACTUACIÓN Y EXPRESIÓN (¡MUY IMPORTANTE!):
+        1. Usa puntos suspensivos (...) para forzar pausas naturales o dramáticas.
+        2. Usa signos de interrogación y exclamación para darle dinamismo y energía.
+        3. Escribe en MAYÚSCULAS las palabras más importantes para que la voz les dé más énfasis y fuerza.
+        4. Usa comas (,) frecuentemente para que la voz respire.
+        
         IMPORTANTE: El guion DEBE estar SIEMPRE en español de Chile (chilenismos moderados, tono cercano pero profesional).
         """
         try:

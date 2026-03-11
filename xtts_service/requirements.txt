@@ -1,0 +1,21 @@
+# --- SERVIDOR Y API ---
+
+# Framework principal: Crea el endpoint que recibirá el texto para convertir a voz.
+fastapi==0.110.0
+
+# Servidor ASGI: El motor que corre la aplicación y expone el puerto.
+uvicorn==0.27.1
+
+# Validación de datos: Asegura que el JSON recibido tenga el texto y el idioma correctos.
+pydantic==2.6.1
+
+# Gestión de Variables de Entorno: Lee configuraciones como FORZAR_CPU desde un .env.
+python-dotenv==1.0.1
+
+# --- MOTOR DE INTELIGENCIA ARTIFICIAL (VOZ) ---
+
+# Coqui TTS: El "Cerebro" que contiene el modelo XTTS v2 para clonar y sintetizar voz.
+TTS==0.22.0
+
+# PyTorch: El "Músculo Matemático" que hace los cálculos de la IA y gestiona el uso de CPU o GPU.
+torch==2.2.1
